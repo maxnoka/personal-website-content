@@ -1,2 +1,2 @@
 personal_website.txt
-another_project.txt
+futoshiki_solver.txt

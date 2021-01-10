@@ -2,8 +2,15 @@
 ##	Title	Personal Website
 ##	Status	Active
 ##	Tags	web-dev programming
+##	Code	https://github.com/maxnoka/personal-website
+##	Execution	https://maxnoka.com/
 --- Intro
 <p>A responsive personal website written (at the moment) in vanilla PHP. 
 Includes a database-less content management system for serving a blog and showcasing personal projects.</p>
 --- Detailed
-<p></p>
+<p>The point of this project was to allow me to host my own website on the <a href="https://www.srcf.net/">Cambridge University
+ Student-Run Computing Facility</a>. I tried to make it as simple and bare-bones as possible, while still having a reasonable feature set that
+ makes managing content easy.</p>
+
+<p> For what I wanted to do (displaying a couple of blog post and project descriptions), I didn't see the need for a database, so content
+ is managed through a couple of text files in a git submodule.</p>

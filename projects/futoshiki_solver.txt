@@ -1,0 +1,23 @@
+--- Meta
+##	Title	Futoshiki Solver
+##	Status	Active
+##	Tags	web-dev programming c++
+##	Code	https://github.com/maxnoka/futoshiki-solver
+##	Execution	https://maxnoka.com/futoshiki/
+--- Intro
+<p>My first (real) C++ Project! A C++ program for solving Futoshiki puzzles, with a PHP (+ minor bit of JS) API and web-interface.</p>
+--- Detailed
+<p>Futoshiki is one of those types of puzzles which (like Sodoku) often appears in the puzzle sections of newspapers.
+ The aim of the game is to fill out a grid of positive integers which satisfy a set of constraints.
+ Like in Sodoku, only one of each number can appear in each row or column, but additionally inequality constraints can be specified between neighbouring squares.<p>
+
+<p>This project includes a C++ program in which I have tried to abstract the Futoshiki puzzle into a general <a href="https://en.wikipedia.org/wiki/Constraint_satisfaction_problem"> Constraint
+Satisfaction Problem</a>. The program uses the available constraints to narrow down the set of valid options for each cell in the puzzle.
+ If it gets stuck it can guess a valid cell value and recurse through the tree of different solutions until it finds a valid solution.
+ This way the program can determine if there exists a valid solution with the given constraints, and if so is guaranteed to find one.
+ Currently it does not check the uniqueness of the solution.</p>
+
+<p>There is also a PHP based web REST API, through which the program can be accessed. It checks the validity of the posted input and calls the solver executable through the command line.
+ Finally, I've also made a little web interface with which a Futoshiki puzzle can be constructed and submitted to the solver.</p>
+
+<p> A further extension I would like to do is for the program to be able to create Futoshiki puzzles which have a unique solution.</p>
