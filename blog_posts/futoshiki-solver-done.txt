@@ -1,0 +1,137 @@
+--- Meta
+##	Title	Finally done with Futoshiki Solver v0.2
+##	Date	20/05/2021
+##	Tags	programming personal-projects c++ web-dev
+--- Post
+The Futoshiki solver started as a weekend project. I wanted to familiarize
+myself more with C++, having only had some background with C previously, and my
+housemate was learning Rust. It was a sprint: Who could finish their
+implementation first?  If I stayed up late on Friday, maybe I could finish it in
+one night!
+
+I did not manage to finish that night after all. Not during that weekend either.
+Instead, it took a couple of weekends over many months, and a full rewrite of my
+initial attempt, before arriving at what I consider to be finally a minimally
+viable Futoshiki solver web app! Truly, it was more of a marathon than a sprint.
+My competitor, who is as smart as I am stubborn, moved on to something else.
+Victory! (I guess?)
+
+For me, this is among the bigger personal programming projects I have done (only
+Audio Modem comes close, but that was done in a team), and so I want to take
+some time now to reflect on what I learned and will do differently for the next
+project:
+
+## Cross-platform development
+
+### Next time:
+
+Consider the target system for your program when you make the initial key design
+decisions like language, framework, build systems. Don't be afraid of CMake.
+
+### This time:
+
+I did not take into account that I would not have binary portability between my
+development machine (MacBook) and the target machine (the SRCF server - a Linux
+box).  My original build system was just XCode, which proved to be utterly
+unsuitable for this reason.
+
+At first, I tried cross-compilation, and hand wrote a makefile for the job, but
+this was very finicky. In the end, I bit the bullet and went for CMake, which is
+100% worth it. I had some trouble initially with various dependencies: CrowCPPs
+CMake was not designed to be used for importing the library, merely to build its
+tests, so I had to write my own.
+
+If I had used something like node, ruby, or python I would not have had this
+kind of problem.  However, with CMake, I feel confident that I will be able to
+deal with any kind of target and dependency in the context of a C or C++
+project. 
+
+## IDE
+
+### Next time:
+
+Find a better IDE than XCode which supports Vim and CMake. I need to learn how
+to use GDB, so I can move away with confidence from the behemoth and inflexible
+IDEs like XCode to something like NeoVim with some plugins for auto-complete and
+static analysis. In the meantime, VSCode is a good middle-ground.
+
+### This time:
+
+I used XCode to start with. It's pretty easy to use (the build system, the
+debugger, the UI, the autocomplete are all nice). That being said, however, I
+never want to use it again:
+- No plugins. Hence, no Vim. 
+- No CMake integration.
+- Static analysis is just ok, e.g. Visual studio with C++ Core Guidelines is
+  more complete.
+
+## Deployment
+
+### Next time:
+
+After doing deployment successfully for the first time, define and write down the
+process, even if it's simple. Firstly, this means it can be more easily
+automated if I find myself doing it a lot. Secondly, it less painful when I come
+back to a project after some time and don't have to retrace my steps to figure
+out all of the intricacies of what I have to do.
+
+### This time:
+
+All I do is git pull a release branch on the server and I'm done it's easy and
+works well. A nice addition for the web frontend was a script that automatically
+sets the permissions of the public / private files automatically.
+
+## Testing
+
+### Next time:
+
+The amount of time I spent initially re-writing, modifying and reverting the
+main.cpp during development for testing purposes is too damn high. Next time
+skip that and go straight for unit tests. 
+
+Create tests to prove the correctness of your input validation. You WILL forget
+what you have tested and again you WILL save time and headaches in the long run.
+
+### This time:
+
+- For the C++ solver, I decided on [Catch2](https://github.com/catchorg/Catch2)
+  as my unit testing framework (compared to
+  [googletest](https://github.com/google/googletest)) and it's very easy to use.
+  It helped me immediately identify a strange issue where the solver was giving
+  different results when compiled on the Mac compared to on the server.
+- For the web frontend, I run MAMP locally, this is perfectly sufficient to run
+  and test my PHP web app locally. 
+- For the API, I have tests set up using the [Talend API
+  tester](https://chrome.google.com/webstore/detail/talend-api-tester-free-ed/aejoelaoggembcahagimdiliamlcdmfm).
+  Running through a bunch of tests with various malformed input gave me loads of
+  confidence in my input validation.
+
+## Planning
+
+### Next time:
+
+No matter what (you *currently* think) the scale of the project is: Stop every
+once in a while and ask yourself: "Is what I am doing sustainable for the
+duration of (this iteration of) the project?".
+
+### This time:
+
+I did none. This came back to bite me once the ultimate complexity of the
+project ballooned and become to be so much greater than I had anticipated. 
+
+This was one reason why the solver required a rewrite. It was getting
+unmanageable. And I was leaking memory like the gutters in the front of my
+house.
+
+### Misc
+
+- There aren't actually that many C++ web frameworks out there. Crow was good,
+  but its JSON parser/writer is a bit janky. I'll try a different one next time.
+- I need to figure out a better way to define and document my API. Any changes
+  made to the API required loads of work on the backend in terms of validation,
+  and also alignment in the frontend. I should check it out.
+  [protobuf](https://developers.google.com/protocol-buffers/) 
+- CSS grid and flexbox is the way forward in terms of laying out web pages.
+- It's way too difficult to make an arrow with pure CSS and HTML.
+- I should try some fuzzing.
+- I should experiment a bit with CI.
