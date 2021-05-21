@@ -123,7 +123,7 @@ This was one reason why the solver required a rewrite. It was getting
 unmanageable. And I was leaking memory like the gutters in the front of my
 house.
 
-### Misc
+## Misc
 
 - There aren't actually that many C++ web frameworks out there. Crow was good,
   but its JSON parser/writer is a bit janky. I'll try a different one next time.
